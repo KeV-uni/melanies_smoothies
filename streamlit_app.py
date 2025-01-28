@@ -1,6 +1,7 @@
 # Import python packages
 import streamlit as st
 from snowflake.snowpark.functions import col
+import requests
 
 # Write directly to the app
 st.title(":cup_with_straw: Customize Your Smoothie! :cup_with_straw:")
@@ -27,8 +28,13 @@ ingredients_list = st.multiselect(
 if ingredients_list:
     # Creamos una variable para tranformar la lista en string
     ingredients_string = ''
+    
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '
+        # Esto nos debe devolver una respuesta 200 si es correcto
+        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+        # Ahora colocaremos el JSON en un Dataframe de smoothie Froot
+        sf_df = st.dataframe(data = smoothiefroot_response.json(), use_container_width=True)
         
     #st.write(ingredients_string)
     # Creamos una declaracion de insercion SQL
@@ -41,12 +47,3 @@ if ingredients_list:
     if time_to_insert:
         session.sql(my_insert_stmt).collect()
         st.success("Your Smoothie is ordered, have a great day "+name_on_order  + "!", icon="✅")
-
-# New section to display smoothiefroot nutrition information
-import requests
-# Esto nos debe devolver una respuesta 200 si es correcto
-smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
-# Ahora vamos a exponer los datos JSON dentro del objeto de respuesta
-st.text(smoothiefroot_response.json())
-# Ahora colocaremos el JSON en un Dataframe de smoothie Froot
-sf_df = st.dataframe(data = smoothiefroot_response.json(), use_container_width=True)
