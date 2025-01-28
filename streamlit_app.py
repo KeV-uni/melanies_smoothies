@@ -48,4 +48,5 @@ import requests
 smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
 # Ahora vamos a exponer los datos JSON dentro del objeto de respuesta
 st.text(smoothiefroot_response.json())
-
+# Ahora colocaremos el JSON en un Dataframe de smoothie Froot
+sf_df = st.dataframe(data = smoothiefroot_response.json(), use_container_width=True)
