@@ -32,7 +32,7 @@ if ingredients_list:
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '
         # Esto nos debe devolver una respuesta 200 si es correcto
-        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + fruit_chosen)
         # Ahora colocaremos el JSON en un Dataframe de smoothie Froot
         sf_df = st.dataframe(data = smoothiefroot_response.json(), use_container_width=True)
         
