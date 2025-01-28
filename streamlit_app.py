@@ -44,5 +44,8 @@ if ingredients_list:
 
 # New section to display smoothiefroot nutrition information
 import requests
+# Esto nos debe devolver una respuesta 200 si es correcto
 smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
-st.text(smoothiefroot_response)
+# Ahora vamos a exponer los datos JSON dentro del objeto de respuesta
+st.text(smoothiefroot_response.json()
+
